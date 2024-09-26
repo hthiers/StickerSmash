@@ -1,5 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 export const CircleInfoIcon = (props) => (
   <FontAwesome name="info-circle" size={24} color="white" {... props} />
@@ -22,5 +23,9 @@ export const VaccIcon = (props) => (
 )
 
 export const HospIcon = (props) => (
-  <MaterialIcons name="local-hospital" size={24} {... props} />
+  <MaterialIcons name="local-hospital" size={32} {... props} />
+)
+
+export const BabyIcon = (props) => (
+  <FontAwesome5 name="baby" size={32} {... props} />
 )

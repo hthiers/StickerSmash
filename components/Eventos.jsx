@@ -14,6 +14,9 @@ export function Eventos() {
       // Agrupar eventos por mes y año
       const groupedItems = groupByMonthAndYear(events);
       setEventos(createFlatListData(groupedItems));
+    })
+    .catch(error => {
+      console.error(error);
     });
   }, []);
 

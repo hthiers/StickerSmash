@@ -1,13 +1,13 @@
 import { Tabs } from "expo-router";
-import { HomeIcon, InfoIcon } from "../../components/Icons";
+import { HomeIcon, InfoIcon, HospIcon, BabyIcon } from "../../components/Icons";
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { backgroundColor: "#000" },
-        tabBarActiveTintColor: "yellow",
+        tabBarStyle: { },
+        tabBarActiveTintColor: "#f5b1ad",
       }}
     >
       <Tabs.Screen
@@ -22,6 +22,20 @@ export default function TabsLayout() {
         options={{
           title: "About",
           tabBarIcon: ({ color }) => <InfoIcon color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="perfilbebe"
+        options={{
+          title: "Mi Bebé",
+          tabBarIcon: ({ color }) => <BabyIcon color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="eventoslist"
+        options={{
+          title: "Vacunas",
+          tabBarIcon: ({ color }) => <HospIcon color={color} />,
         }}
       />
     </Tabs>

@@ -8,7 +8,7 @@ export default function Layout() {
     <View className="flex-1">
       <Stack
         screenOptions={{
-          headerTitle: "Soy Mamá",
+          headerTitle: "App Soy Mamá",
           headerLeft: () => <Logo className="mb-2" />,
           headerRight: () => (
             <Link asChild href="/about">
