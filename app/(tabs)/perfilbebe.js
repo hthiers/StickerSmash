@@ -1,70 +1,37 @@
-import React, { useState } from "react";
-import { TextInput, Button, ScrollView, Text, View, Alert } from "react-native";
-import { styled } from "nativewind";
+import React, { useState, useEffect } from "react";
+import { ScrollView } from "react-native";
 import { Screen } from "../../components/Screen";
-import { ingresaBebe } from "../../lib/api_app_mama";  // Importar el método
-
-const StyledTextInput = styled(TextInput);
-const StyledButton = styled(Button);
+import { DatosBebe } from "../../components/DatosBebe";
+import { NuevoBebe } from "../../components/NuevoBebe";
+import { getBebes } from "../../lib/api_app_mama";  // Asumiendo que esta función ya existe
 
 export default function PerfilBebe() {
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [bebeData, setBebeData] = useState(null);
 
-  // Manejar el envío del formulario
-  const handleSubmit = async () => {
-    try {
-      const response = await ingresaBebe(nombre, apellido, fechaNacimiento);
-      if (response.ok) {
-        Alert.alert("Éxito", "Los datos del bebé se han ingresado correctamente.");
-      } else {
-        Alert.alert("Error", "Hubo un problema al ingresar los datos.");
+  useEffect(() => {
+    const fetchBebeData = async () => {
+      try {
+        const data = await getBebes();
+        setBebeData(data.length > 0 ? data[0] : null);
+      } catch (error) {
+        console.error("Error al obtener datos del bebé:", error);
       }
-    } catch (error) {
-      console.error("Error al ingresar bebé:", error);
-      Alert.alert("Error", "No se pudo conectar con el servidor.");
-    }
-  };
+    };
+    fetchBebeData();
+  }, []);
 
   return (
     <Screen>
       <ScrollView>
-
-        <Text className="font-bold mb-8 text-2xl">Datos del bebé</Text>
-
-        <View className="mb-4">
-          <Text className="mb-2">Nombre</Text>
-          <StyledTextInput
-            className="border p-2 rounded"
-            placeholder="Nombre"
-            value={nombre}
-            onChangeText={setNombre}
+        {bebeData ? (
+          <DatosBebe 
+            nombre={bebeData.nombre}
+            apellido={bebeData.apellido}
+            fechaNacimiento={bebeData.fecha_nacimiento}
           />
-        </View>
-
-        <View className="mb-4">
-          <Text className="mb-2">Apellido</Text>
-          <StyledTextInput
-            className="border p-2 rounded"
-            placeholder="Apellido"
-            value={apellido}
-            onChangeText={setApellido}
-          />
-        </View>
-
-        <View className="mb-4">
-          <Text className="mb-2">Fecha de Nacimiento</Text>
-          <StyledTextInput
-            className="border p-2 rounded"
-            placeholder="Fecha de Nacimiento (YYYY-MM-DD)"
-            value={fechaNacimiento}
-            onChangeText={setFechaNacimiento}
-          />
-        </View>
-
-        <StyledButton title="Ingresar Datos" onPress={handleSubmit} />
-
+        ) : (
+          <NuevoBebe />
+        )}
       </ScrollView>
     </Screen>
   );
